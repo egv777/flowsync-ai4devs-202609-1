@@ -13,7 +13,7 @@ type ProfileState =
 const dateFormatter = new Intl.DateTimeFormat('es-ES', { dateStyle: 'long' })
 
 export function ProfilePage() {
-  const { token, clearToken } = useAuth()
+  const { token, clearToken, expireSession } = useAuth()
   const navigate = useNavigate()
   const [state, setState] = useState<ProfileState>({ status: 'loading' })
   const [loggingOut, setLoggingOut] = useState(false)
@@ -28,9 +28,8 @@ export function ProfilePage() {
       .catch((error: unknown) => {
         if (cancelled) return
         if (error instanceof ApiError && error.status === 401) {
-          // Token revoked or expired: back to login, telling the user why.
-          navigate('/login', { replace: true, state: { sessionExpired: true } })
-          clearToken()
+          // Token revoked or expired: RequireAuth sends the user to /login, which explains why.
+          expireSession()
           return
         }
         setState({ status: 'error', message: 'No se pudo cargar tu perfil. Recarga la página.' })
@@ -38,7 +37,7 @@ export function ProfilePage() {
     return () => {
       cancelled = true
     }
-  }, [token, clearToken, navigate])
+  }, [token, expireSession])
 
   async function handleLogout() {
     setLoggingOut(true)

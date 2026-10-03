@@ -1,5 +1,5 @@
 import { useState, type FormEvent } from 'react'
-import { Link, useLocation, useNavigate } from 'react-router'
+import { Link, useNavigate } from 'react-router'
 import { AlertCircle } from 'lucide-react'
 import { AuthLayout } from '@/components/auth-layout'
 import { FormField } from '@/components/form-field'
@@ -10,11 +10,8 @@ import { useAuth } from '@/lib/auth-context'
 import { loginErrors, type FormErrors } from '@/lib/errors'
 
 export function LoginPage() {
-  const { setToken } = useAuth()
+  const { setToken, sessionExpired } = useAuth()
   const navigate = useNavigate()
-  const sessionExpired = Boolean(
-    (useLocation().state as { sessionExpired?: boolean } | null)?.sessionExpired,
-  )
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [errors, setErrors] = useState<FormErrors>({ fields: {} })

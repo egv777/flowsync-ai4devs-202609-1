@@ -22,6 +22,7 @@ function writeStoredToken(token: string | null) {
 
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [token, setTokenState] = useState(readStoredToken)
+  const [sessionExpired, setSessionExpired] = useState(false)
 
   // Keep tabs in sync: logging in or out in one tab updates the others.
   useEffect(() => {
@@ -35,14 +36,25 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const setToken = useCallback((value: string) => {
     writeStoredToken(value)
     setTokenState(value)
+    setSessionExpired(false)
   }, [])
 
   const clearToken = useCallback(() => {
     writeStoredToken(null)
     setTokenState(null)
+    setSessionExpired(false)
   }, [])
 
-  const value = useMemo(() => ({ token, setToken, clearToken }), [token, setToken, clearToken])
+  const expireSession = useCallback(() => {
+    writeStoredToken(null)
+    setTokenState(null)
+    setSessionExpired(true)
+  }, [])
+
+  const value = useMemo(
+    () => ({ token, setToken, clearToken, sessionExpired, expireSession }),
+    [token, setToken, clearToken, sessionExpired, expireSession],
+  )
 
   return <AuthContext value={value}>{children}</AuthContext>
 }
