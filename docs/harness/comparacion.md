@@ -7,7 +7,9 @@ Ticket: **FLOW-1 — Implementar login en el frontend** (registro, login y perfi
 
 Todas las rutas son relativas a `frontend/`. Cada fila agrupa los ficheros que cumplen el mismo papel; `—` indica que esa versión no tiene equivalente.
 
-## Ficheros
+# Parte A
+
+## 1. Archivos que propone tocar
 
 | Con harness | Sin harness |
 |---|---|
@@ -42,6 +44,22 @@ Todas las rutas son relativas a `frontend/`. Cada fila agrupa los ficheros que c
 | `D src/App.css` | `src/App.css` (eliminado) |
 | `D src/assets/hero.png`, `D src/assets/react.svg`, `D src/assets/vite.svg` | `src/assets/hero.png`, `react.svg`, `vite.svg` (eliminados) |
 
+## 2. Qué convenciones del proyecto respetó y cuáles no
+| Con harness | Sin harness |
+|---|---| 
+|
+| `Diria que todas` | `Ninguna. No tenia` |
+
+## 3. Cuántas veces tuviste que intervenir
+| Con harness | Sin harness |
+|---|---| 
+|
+| `Una. Para lanzar /priority-ticket ` | `Ninguna. No he ejecutado el plan` |
+
+## 4. Qué te tocaría arreglar a mano antes de enseñarle eso a alguien de tu equipo.
+Tendría que revisar el código y React no controlo mucho, pero la pagina de login carga. Seguramente se pueda refactorizar algo pero en un principio tiene buena pinta.
+
+
 ## Diferencias de proceso
 
 | Con harness | Sin harness |
@@ -51,3 +69,18 @@ Todas las rutas son relativas a `frontend/`. Cada fila agrupa los ficheros que c
 | Revisión del PR con el subagente `adversarial-reviewer`; el PR incluye 3 commits de corrección (contraseñas truncadas por `maxLength`, sesión caducada con 401, redirección de invitados, sincronización entre pestañas) | Verificación al final: `npm run build`, `npm run lint`, recorrido manual en el navegador y `curl` a través del proxy |
 | Nombres de fichero en kebab-case y lógica repartida en ficheros pequeños (`errors.ts`, `auth-context.ts`, `form-field.tsx`, `auth-layout.tsx`) | Nombres en PascalCase y la lógica de auth concentrada en `auth.tsx` |
 | Llamadas directas a `http://localhost:3333` (CORS abierto en dev), configurable con `VITE_API_URL` | Proxy de Vite `/api` → `localhost:3333` |
+
+
+# Parte B
+## 1. Hasta qué pieza llegaste, y cuál te costó más de lo que esperabas. El número de la lista, y en qué se te fue el rato de verdad.
+Creo que he llegado a todo, aunque le he dedicado mas de 45 min. Lo que más me ha costado ha sido entender bien como se debía de entregar, y encima lo he hecho mal. He mergeado la PR en mi rama harnes-egv y ahora cuando haga la PR desde mi fork van a ir también los cambios que he hecho.
+
+## 2. La primera diferencia que viste entre las dos salidas, y en qué te fijaste para verla. Ojo, no cuál fue mejor: qué salió distinto, concretamente, y dónde estabas mirando cuando lo notaste. Si tuviste que abrir un archivo para verlo, dilo.
+Me ha gustado mucho como se claude se ha ceñido perfectamente a seguir los pasos del harness sin salirse. Ha ejecutado exactamente los pasos indicados en `CLAUDE.md`.
+
+## 3. Algo que dejaste escrito en el harness y que el agente no cumplió igualmente. El matiz es todo: no es lo que hizo mal la copia pelada. Es lo que tú habías dejado negro sobre blanco en el lado bueno y aun así no pasó.
+Ha habido una cosa que no he terminado de comprender. En todo el proceso en el que ha estado trabajando, a la hora de hacer el `adversarial-reviewer` no he llegado a ver que es lo que le parecía mal. Lo ha corregido, y ha hecho el commit (3 para ser precisos). Le he preguntado porque había hecho commits, y me ha dicho que no lo ha hecho ese agente, sino el coordinador, y aqui es donde no lo he entendido bien a qué se ha referido con el coordinador. Si bien es verdad que en `CLAUDE.md`, en el ultimo apartado, Process rules, estan todos los pasos detallados, y precisamente en el paso 4 dice (lo he creado en inglés, estoy acostumbrada a hablar a claude en ingles, y por lo que veo, algunas cosas las crea en castellano otras en ingles). En fin, en este paso 4 que dice: 
+
+4. **Then the `adversarial-reviewer` subagent on the pull request**, passing the PR URL. If it returns `BLOCK` or `CHANGES`, fix the findings on the same branch, `/commit` again, push, and run the reviewer again.
+
+por lo que entiendo que el `adversarial-reviewer` solo devuelve un resultado (`BLOCK` or `CHANGES`) y el agente principal (que es el que ha hecho los cambios e invocado al `adversarial-reviewer`, es el que hace el  `/commit`. Pero sigo sin entenderlo muy bien.
