@@ -3,7 +3,7 @@
 Ticket: **FLOW-1 — Implementar login en el frontend** (registro, login y perfil protegido con shadcn/ui).
 
 - **Con harness**: ficheros del PR #1 (`feat/FLOW-1-login-frontend`), mergeado en `9e51793aa891793df8cb06b7b96c554da7502a86`. Estado: `A` añadido, `M` modificado, `D` eliminado.
-- **Sin harness**: ficheros previstos en el plan generado sin harness (`plan/plan-withou-harness.md`).
+- **Sin harness**: ficheros previstos en el plan que se generó sin harness para el mismo ticket. Ese plan no se versiona en el repo.
 
 Todas las rutas son relativas a `frontend/`. Cada fila agrupa los ficheros que cumplen el mismo papel; `—` indica que esa versión no tiene equivalente.
 
@@ -13,7 +13,7 @@ Todas las rutas son relativas a `frontend/`. Cada fila agrupa los ficheros que c
 |---|---|
 | **Configuración y dependencias** | |
 | `A components.json` | `components.json` (nuevo) |
-| `M package.json`, `M package-lock.json` — `react-router`, `tailwindcss`, `@tailwindcss/vite`, `radix-ui`, `class-variance-authority`, `lucide-react`, `shadcn`, `tw-animate-css` | `package.json`, `package-lock.json` (modificados) — `react-router`, `tailwindcss`, `@tailwindcss/vite`, `clsx`, `tailwind-merge`, `class-variance-authority`, `lucide-react`, Radix |
+| `M package.json`, `M package-lock.json` — `react-router`, `tailwindcss`, `@tailwindcss/vite`, `radix-ui`, `class-variance-authority`, `lucide-react`, `cn`, `shadcn`, `tw-animate-css` | `package.json`, `package-lock.json` (modificados) — `react-router`, `tailwindcss`, `@tailwindcss/vite`, `clsx`, `tailwind-merge`, `class-variance-authority`, `lucide-react`, Radix |
 | `M vite.config.ts` — plugin de Tailwind y alias `@` | `vite.config.ts` (modificado) — plugin de Tailwind, alias `@` y **proxy `/api` → `localhost:3333`** |
 | `M tsconfig.json`, `M tsconfig.app.json` — alias `@/*` | `tsconfig.json`, `tsconfig.app.json` (modificados) — alias `@/*` |
 | `M index.html` — `lang="es"` y título `FlowSync` | — |
@@ -24,7 +24,7 @@ Todas las rutas son relativas a `frontend/`. Cada fila agrupa los ficheros que c
 | **Cliente de la API y errores** | |
 | `A src/lib/api.ts` — URL base `VITE_API_URL` o `http://localhost:3333` | `src/lib/api.ts` (nuevo) — rutas relativas `/api/v1` vía proxy |
 | `A src/lib/errors.ts` — traducción de errores de la API a mensajes | — (dentro de las páginas) |
-| `A src/lib/utils.ts` — `cn()` | `src/lib/utils.ts` (nuevo) — `cn()` |
+| `A src/lib/utils.ts` — reexporta `cn()` del paquete npm `cn` | `src/lib/utils.ts` (nuevo) — `cn()` de shadcn con `clsx` + `tailwind-merge` |
 | **Estado de autenticación** | |
 | `A src/lib/auth-context.ts` — contexto y hook `useAuth` | `src/lib/auth.tsx` (nuevo) — `AuthProvider`, `useAuth()` y `RequireAuth` en un solo fichero |
 | `A src/components/auth-provider.tsx` — token en `localStorage`, sincronización entre pestañas, aviso de sesión caducada | ↑ incluido en `src/lib/auth.tsx` |
@@ -48,6 +48,6 @@ Todas las rutas son relativas a `frontend/`. Cada fila agrupa los ficheros que c
 |---|---|
 | Rama propia `feat/FLOW-1-login-frontend`, PR a `harness-egv` en el fork | Sin rama ni PR definidos |
 | 4 commits convencionales con `Refs: FLOW-1` (skill `/commit`) | Sin convención de commits |
-| Revisión del PR con el subagente `adversarial-reviewer`; el PR incluye 3 commits de corrección (contraseñas truncadas por `maxLength`, sesión caducada con 401, redirección de invitados, sincronización entre pestañas) | Verificación manual en el navegador al final |
+| Revisión del PR con el subagente `adversarial-reviewer`; el PR incluye 3 commits de corrección (contraseñas truncadas por `maxLength`, sesión caducada con 401, redirección de invitados, sincronización entre pestañas) | Verificación al final: `npm run build`, `npm run lint`, recorrido manual en el navegador y `curl` a través del proxy |
 | Nombres de fichero en kebab-case y lógica repartida en ficheros pequeños (`errors.ts`, `auth-context.ts`, `form-field.tsx`, `auth-layout.tsx`) | Nombres en PascalCase y la lógica de auth concentrada en `auth.tsx` |
 | Llamadas directas a `http://localhost:3333` (CORS abierto en dev), configurable con `VITE_API_URL` | Proxy de Vite `/api` → `localhost:3333` |
