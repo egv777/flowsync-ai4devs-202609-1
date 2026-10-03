@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useState, type ReactNode } from 'react'
+import { useCallback, useEffect, useMemo, useState, type ReactNode } from 'react'
 import { AuthContext } from '@/lib/auth-context'
 
 const STORAGE_KEY = 'flowsync.token'
@@ -22,6 +22,15 @@ function writeStoredToken(token: string | null) {
 
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [token, setTokenState] = useState(readStoredToken)
+
+  // Keep tabs in sync: logging in or out in one tab updates the others.
+  useEffect(() => {
+    function handleStorage(event: StorageEvent) {
+      if (event.key === STORAGE_KEY || event.key === null) setTokenState(readStoredToken())
+    }
+    window.addEventListener('storage', handleStorage)
+    return () => window.removeEventListener('storage', handleStorage)
+  }, [])
 
   const setToken = useCallback((value: string) => {
     writeStoredToken(value)

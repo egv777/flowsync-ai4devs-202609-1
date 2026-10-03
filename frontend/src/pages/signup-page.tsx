@@ -21,6 +21,11 @@ export function SignupPage() {
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
+    // Checked here instead of with maxLength, which would silently truncate pasted passwords.
+    if (password.length < 8 || password.length > 32) {
+      setErrors({ fields: { password: 'Debe tener entre 8 y 32 caracteres.' } })
+      return
+    }
     if (password !== passwordConfirmation) {
       setErrors({ fields: { passwordConfirmation: 'Las contraseñas no coinciden.' } })
       return
@@ -78,7 +83,6 @@ export function SignupPage() {
           type="email"
           autoComplete="email"
           required
-          maxLength={254}
           value={email}
           onChange={(event) => setEmail(event.target.value)}
           error={errors.fields.email}
@@ -89,8 +93,6 @@ export function SignupPage() {
           type="password"
           autoComplete="new-password"
           required
-          minLength={8}
-          maxLength={32}
           placeholder="Entre 8 y 32 caracteres"
           value={password}
           onChange={(event) => setPassword(event.target.value)}
@@ -102,8 +104,6 @@ export function SignupPage() {
           type="password"
           autoComplete="new-password"
           required
-          minLength={8}
-          maxLength={32}
           value={passwordConfirmation}
           onChange={(event) => setPasswordConfirmation(event.target.value)}
           error={errors.fields.passwordConfirmation}

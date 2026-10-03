@@ -28,7 +28,8 @@ export function ProfilePage() {
       .catch((error: unknown) => {
         if (cancelled) return
         if (error instanceof ApiError && error.status === 401) {
-          // Token revoked or invalid: drop it, RequireAuth sends the user to /login.
+          // Token revoked or expired: back to login, telling the user why.
+          navigate('/login', { replace: true, state: { sessionExpired: true } })
           clearToken()
           return
         }
@@ -37,7 +38,7 @@ export function ProfilePage() {
     return () => {
       cancelled = true
     }
-  }, [token, clearToken])
+  }, [token, clearToken, navigate])
 
   async function handleLogout() {
     setLoggingOut(true)

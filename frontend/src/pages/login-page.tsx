@@ -1,5 +1,5 @@
 import { useState, type FormEvent } from 'react'
-import { Link, useNavigate } from 'react-router'
+import { Link, useLocation, useNavigate } from 'react-router'
 import { AlertCircle } from 'lucide-react'
 import { AuthLayout } from '@/components/auth-layout'
 import { FormField } from '@/components/form-field'
@@ -12,6 +12,9 @@ import { loginErrors, type FormErrors } from '@/lib/errors'
 export function LoginPage() {
   const { setToken } = useAuth()
   const navigate = useNavigate()
+  const sessionExpired = Boolean(
+    (useLocation().state as { sessionExpired?: boolean } | null)?.sessionExpired,
+  )
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [errors, setErrors] = useState<FormErrors>({ fields: {} })
@@ -45,6 +48,12 @@ export function LoginPage() {
       }
     >
       <form onSubmit={handleSubmit} className="grid gap-4">
+        {sessionExpired && !errors.form && (
+          <Alert>
+            <AlertCircle />
+            <AlertDescription>Tu sesión ha caducado. Vuelve a iniciar sesión.</AlertDescription>
+          </Alert>
+        )}
         {errors.form && (
           <Alert variant="destructive">
             <AlertCircle />
@@ -57,7 +66,6 @@ export function LoginPage() {
           type="email"
           autoComplete="email"
           required
-          maxLength={254}
           value={email}
           onChange={(event) => setEmail(event.target.value)}
         />
