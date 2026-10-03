@@ -27,7 +27,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   // Keep tabs in sync: logging in or out in one tab updates the others.
   useEffect(() => {
     function handleStorage(event: StorageEvent) {
-      if (event.key === STORAGE_KEY || event.key === null) setTokenState(readStoredToken())
+      if (event.key !== STORAGE_KEY && event.key !== null) return
+      // A change made in another tab is a login or logout, never an expiry in this one.
+      setTokenState(readStoredToken())
+      setSessionExpired(false)
     }
     window.addEventListener('storage', handleStorage)
     return () => window.removeEventListener('storage', handleStorage)
