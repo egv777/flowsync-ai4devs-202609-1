@@ -9,7 +9,7 @@ Hoy el producto solo tiene cuentas de usuario: registro, inicio y cierre de sesi
 Estas respuestas del producto ya están decididas y no se discuten aquí:
 
 - La daily no desaparece entera. Desaparece la ronda de "¿en qué estás?". Los bloqueos siguen tratándose en la daily y este MVP no los resuelve.
-- El estado lo teclea quien hace la tarea, en segundos. No se deriva de Git, CI ni calendario.
+- El estado lo teclea quien hace la tarea, en segundos. Derivarlo de señales externas (Git, PRs, CI, calendario) queda fuera del MVP: es otro producto, con integraciones y OAuth de terceros.
 - El riesgo nº 1 a validar es que la información se quede vieja.
 - Caso de estudio, no cliente real: un equipo de 6 personas de producto SaaS en 3 husos horarios.
 
@@ -25,15 +25,18 @@ Equipos remotos pequeños, de 3 a 10 personas. Los beneficiarios son los pares, 
 
 ### Propuesta de valor
 
-Saber de un vistazo quién está en qué, para no empezar algo que otra persona ya toca y para elegir lo siguiente sabiendo qué está libre. Quien actualiza su tarea cobra en el momento: esa misma lista es su cola de trabajo y deja de recibir interrupciones.
+Saber de un vistazo quién está en qué, para no empezar algo que otra persona ya toca y para elegir lo siguiente sabiendo qué está libre. Quien actualiza su tarea cobra en el momento: esa misma lista es lo que mira para decidir qué coger, y deja de recibir interrupciones.
 
 ### Alcance
 
 Una vertical fina y usable de punta a punta, en un espacio único compartido:
 
-- Crear una tarea con título, responsable, estado y fecha de vencimiento. Sin otros campos obligatorios.
-- Estados simples, que se cambian en dos clics sobre la lista ya abierta.
-- La lista se filtra por estado para centrarse en lo pendiente, y deja ver qué se ha pasado de plazo.
+- Crear una tarea con título, responsable, estado y fecha de vencimiento. Ningún campo es obligatorio.
+- El único estado definido por el producto es "Sin asignar", que significa que la tarea está libre. El resto de estados los escribe el responsable de la tarea.
+- Cambiar el estado es rápido, en dos clics sobre la lista ya abierta.
+- La lista se filtra por estado, para centrarse en lo pendiente. Es el único filtro del MVP.
+- La lista deja ver qué se ha pasado de plazo.
+- Al volver, la lista marca qué tareas han cambiado desde tu última visita. Sin historial ni informes.
 - Los cambios de estado aparecen sin refrescar ni preguntar.
 - El estado es de la tarea, no de la persona.
 
@@ -45,9 +48,11 @@ Cada exclusión lleva la hipótesis del producto que no ayudaría a validar.
 - **Quién está conectado e indicadores de actividad:** el producto trata de frescura, no de presencia. Medir conexión es vigilancia, y se rechaza a propósito.
 - **Notificaciones push:** la señal es un resumen que espera, que se ve al llegar o volver de una reunión. Un aviso que interrumpe contradice el motivo de existir.
 - **Vista o informe para un manager, y analítica:** el valor es para los pares. No ayuda a validar que el equipo cancele la ronda de "¿en qué estás?".
-- **Roles y permisos avanzados:** con roles planos, el MVP se valida sin jerarquía.
-- **Comentarios en tareas:** el chat es otro canal. No ayuda a validar que el estado se vea de un vistazo.
-- **Integración con Slack y derivar el estado de Git, CI o calendario:** es otro producto, con integraciones de terceros. Además, lo que importa es que el estado lo teclee quien hace la tarea.
+- **Filtrar por responsable ("mis tareas"):** el MVP se valida con un solo filtro. Queda sin validar si hace falta una cola personal, aparte de ver qué hay libre y qué se mueve.
+- **Roles y permisos avanzados:** con roles planos, todos editan lo mismo. Queda sin validar si la confianza entre pares basta, y no se resuelve aquí.
+- **Comentarios en tareas, chat, videollamada y edición simultánea:** el producto no es un canal de conversación. No ayuda a validar que el estado se vea de un vistazo.
+- **Integración con Slack:** no ayuda a validar nada del problema. Exige integrar un tercero y el estado no depende de él.
+- **Derivar el estado de Git, CI o calendario:** contradice la hipótesis central. El estado lo teclea quien hace la tarea, y esa es la apuesta a validar, no automatizarla.
 - **Convivir con otro gestor de tareas, o leer tareas de otro sitio:** exige doble actualización, que es como muere esta categoría. FlowSync sustituye al gestor, no convive con él.
 - **Sprints, estimaciones, épicas y backlog priorizado:** un equipo que los necesite no es el usuario. Además, contradicen "menos rollo que Jira".
 - **Resolver bloqueos:** la parte de bloqueos de la daily sigue fuera de este MVP. Validar si la ronda de estado desaparece no los necesita.
