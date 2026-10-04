@@ -21,47 +21,39 @@ Nadie ve el estado del equipo sin interrumpir a alguien. La daily se come la mit
 
 ### Usuarios
 
-Equipos remotos pequeños, de 3 a 10 personas. Los beneficiarios son los pares, no un lead: no hay reporte hacia arriba. Roles planos: todos ven lo mismo. Cada persona cambia el estado de sus propias tareas, y cualquiera puede coger una tarea sin responsable.
+Equipos remotos pequeños, de 3 a 10 personas. Los beneficiarios son los pares, no un lead: no hay reporte hacia arriba. Roles planos: todos ven y editan lo mismo.
 
 ### Propuesta de valor
 
-Saber de un vistazo quién está en qué, para no empezar algo que otra persona ya toca y para elegir lo siguiente sabiendo qué está libre.
+Saber de un vistazo quién está en qué y qué está libre, para no empezar algo que otra persona ya toca. Es una lista compartida, con cambios en vivo y sin rituales, que sustituye la ronda de "¿en qué estás?" sin aspirar a sustituir toda la daily.
+
 ### Alcance
 
 Una vertical fina y usable de punta a punta, en un espacio único compartido:
 
-- Crear una tarea con título, responsable, estado y fecha de vencimiento. Ningún campo es obligatorio. Una tarea sin título aparece en la lista como "Sin título".
-- El responsable es cualquier usuario registrado en el espacio compartido.
-- "Sin asignar" no es un estado: es el valor del responsable cuando está vacío. Una tarea nace "Sin asignar", y al asignarle un responsable "Sin asignar" desaparece. Una tarea "Sin asignar" está libre.
-- El producto define dos estados: "TODO", que es el de una tarea "Sin asignar" por defecto, y "DONE", para las tareas terminadas. Salvo esos dos, los estados son texto libre y los escribe el responsable de la tarea.
-- Cualquiera puede coger una tarea "Sin asignar": se la asigna a sí mismo y, en ese momento, actualiza su estado.
-- Solo el responsable cambia el estado de su tarea.
-- Cualquiera puede cambiar el título y la fecha de vencimiento de una tarea.
-- El responsable puede soltar su tarea: vuelve a "Sin asignar" y su estado vuelve a "TODO".
-- Cambiar el estado es rápido, en segundos, sobre la lista ya abierta.
+- Crear una tarea con título, responsable, estado y fecha de vencimiento. Ningún campo es obligatorio.
+- Una tarea sin responsable aparece como "Sin asignar" y está libre. "Sin asignar" no es un estado: es el valor del responsable cuando está vacío. El responsable es cualquier usuario registrado.
+- El producto define dos estados: "TODO", que es el de una tarea "Sin asignar" por defecto, y "DONE". Salvo esos dos, los estados son texto libre.
+- La lista es compartida y los cambios aparecen sin refrescar ni preguntar.
 - La lista se filtra por estado, para centrarse en lo pendiente, que es todo lo que no está en "DONE". Es el único filtro del MVP.
-- La lista deja ver qué se ha pasado de plazo. Una tarea en "DONE" no cuenta.
-- La lista marca qué tareas han cambiado desde que las diste por vistas. Sin historial ni informes.
-  - Cuenta cualquier cambio de una tarea (estado, responsable, título, fecha de vencimiento) y las tareas nuevas.
-  - Solo cuentan los cambios de otras personas, no los tuyos.
-  - Los cambios que llegan con la lista abierta se marcan al instante.
-  - La marca se queda hasta que la persona la da por vista. Recargar o mirar de pasada no la borra.
-  - En la primera visita no aparece nada marcado.
-  - Ese dato es privado: solo cada persona ve sus marcas, y nadie ve cuándo miró otra persona.
+- La fecha de vencimiento es visible, y se marca lo que se ha pasado de plazo. Una tarea en "DONE" no cuenta.
 - Cada tarea muestra cuándo se actualizó por última vez, para que el equipo juzgue si está caducada. Sin alertas.
-- Los cambios de estado aparecen sin refrescar ni preguntar.
-- El estado es de la tarea, no de la persona.
+
+El estado es de la tarea, no de la persona.
 
 ### NO-alcance
 
 Cada exclusión lleva la hipótesis del producto que no ayudaría a validar.
 
+- **Marcas de "cambiado desde que lo diste por visto":** no ayudan a validar nada que la lista en vivo con la última actualización no valide ya. Exigen guardar por persona qué ha visto, y definir reglas (primera visita, cambios propios, privacidad). Si en el uso real alguien pide "¿qué cambió desde ayer?", entra.
+- **Reglas de permisos por tarea y "soltar" una tarea:** todos editan lo mismo. Las reglas añaden casos (quién cambia qué, qué estado queda al soltar) que no ayudan a validar la hipótesis central. La confianza entre 3 y 10 personas se asume y se observa en el uso real.
+- **Tratamiento especial de tareas sin título:** es un detalle de diseño que no cambia ninguna hipótesis del producto.
 - **Varios equipos, o gente en más de un equipo:** no ayuda a validar si un espacio compartido evita la duplicación de trabajo. Se anota como supuesto y no se construye.
 - **Quién está conectado e indicadores de actividad:** el producto trata de frescura, no de presencia. Medir conexión es vigilancia, y se rechaza a propósito.
 - **Notificaciones push:** la señal es un resumen que espera, que se ve al llegar o volver de una reunión. Un aviso que interrumpe contradice el motivo de existir.
 - **Vista o informe para un manager, y analítica:** el valor es para los pares. No ayuda a validar que el equipo cancele la ronda de "¿en qué estás?".
 - **Filtrar por responsable ("mis tareas"):** no ayuda a validar que ver el estado de todos evite el trabajo duplicado, que se comprueba con la lista completa. Si el equipo pide "mis tareas" en el uso real, es la señal de que el beneficio propio no basta para que actualicen.
-- **Roles y permisos avanzados:** no ayuda a validar que un estado compartido sustituya la ronda de "¿en qué estás?". La hipótesis es que, en un equipo de 3 a 10 personas de confianza, un estado visible para todos basta sin control de acceso fino. Las reglas mínimas son que cada persona cambia el estado de lo suyo y que cualquiera puede coger una tarea sin responsable.
+- **Roles y permisos avanzados:** no ayuda a validar que un estado compartido sustituya la ronda de "¿en qué estás?". La hipótesis es que, en un equipo de 3 a 10 personas de confianza, un estado visible para todos basta sin control de acceso fino.
 - **Comentarios en tareas, chat, videollamada y edición simultánea:** el producto no es un canal de conversación. No ayuda a validar que el estado se vea de un vistazo.
 - **Integración con Slack:** no ayuda a validar que una lista compartida sustituya el "¿en qué estás?" por chat. Llevar el estado al chat repetiría el canal que hoy genera la interrupción.
 - **Derivar el estado de Git, CI o calendario:** contradice la hipótesis central. El estado lo teclea quien hace la tarea, y esa es la apuesta a validar, no automatizarla.
@@ -73,10 +65,19 @@ Cada exclusión lleva la hipótesis del producto que no ayudaría a validar.
 
 - **Éxito para el usuario:** deja de hacer la ronda de "¿en qué estás?" porque el estado se ve de un vistazo.
 - **Criterio a una semana de uso real:** el equipo cancela esa ronda y nadie pide que vuelva. Si la siguen haciendo igual, no funcionó.
-- **Riesgo nº 1:** que la información se quede vieja. La mitigación es que actualizar cueste segundos, sin obligar a nadie. Un compañero no puede corregir el estado caducado de la tarea de otra persona, y eso agrava el riesgo.
+- **Riesgo nº 1:** que la información se quede vieja. La mitigación es que actualizar cueste segundos, sin obligar a nadie, y que la última actualización de cada tarea sea visible.
 
 ## 5. Supuestos
 
 - Un espacio único compartido. Varios equipos separados quedan fuera del MVP.
-- Quien se registra entra en ese espacio compartido y ve todo. Es un riesgo asumido para el MVP: es una demo con un caso de estudio, no un cliente real, así que no hay datos sensibles ni usuarios ajenos al equipo.
+- Quien se registra entra en ese espacio compartido y ve y edita todo. Es un riesgo asumido para el MVP: es una demo con un caso de estudio, no un cliente real, así que no hay datos sensibles ni usuarios ajenos al equipo.
 - Salvo "TODO" y "DONE", los estados son texto libre. El filtro por estado puede fragmentarse si cada persona escribe el mismo estado de forma distinta.
+
+## Parte B: las tres líneas
+
+1. **Los dos números.** La IA propuso 7 cosas dentro del alcance. Quedaron 7 dentro después del recorte.
+2. **Tres cosas que dejé fuera, y por qué.**
+   - **Filtrar por responsable ("mis tareas"):** no ayuda a validar que ver el estado de todos evite el trabajo duplicado, que se comprueba con la lista completa.
+   - **Permisos por tarea y "soltar" una tarea:** no ayudan a validar que un estado visible para todos sustituya la ronda de "¿en qué estás?". La hipótesis es que en un equipo de 3 a 10 personas de confianza no hace falta control fino.
+   - **Varios equipos, o gente en más de uno:** no ayuda a validar si un espacio compartido evita el trabajo duplicado, que es la hipótesis central.
+3. **La exclusión de la que menos seguro estoy: más estados fijos.** Solo definí "TODO" y "DONE" como estados fijos, y el resto es texto libre. Para filtrar y para ver el estado de un vistazo, probablemente no valga, y habrá que definir más estados fijos. Lo que se contradecía: lo barato (texto libre, sin configuración ni rituales, que es lo que prometo frente a Jira) contra lo que valida (un filtro y una lista que se leen de un vistazo necesitan valores consistentes). Entraría si, en el uso real, el filtro por estado se fragmenta ("en curso", "doing"...) o el equipo pide filtrar por un estado intermedio.
