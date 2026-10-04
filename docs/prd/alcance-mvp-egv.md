@@ -21,11 +21,11 @@ Nadie ve el estado del equipo sin interrumpir a alguien. La daily se come la mit
 
 ### Usuarios
 
-Equipos remotos pequeños, de 3 a 10 personas. Los beneficiarios son los pares, no un lead: no hay reporte hacia arriba. Roles planos: todos ven y editan lo mismo.
+Equipos remotos pequeños, de 3 a 10 personas. Los beneficiarios son los pares, no un lead: no hay reporte hacia arriba. Roles planos: todos ven lo mismo. Cada persona cambia el estado de sus propias tareas, y cualquiera puede coger una tarea que esté "Sin asignar".
 
 ### Propuesta de valor
 
-Saber de un vistazo quién está en qué, para no empezar algo que otra persona ya toca y para elegir lo siguiente sabiendo qué está libre. Quien actualiza su tarea cobra en el momento: esa misma lista es lo que mira para decidir qué coger, y deja de recibir interrupciones.
+Saber de un vistazo quién está en qué, para no empezar algo que otra persona ya toca y para elegir lo siguiente sabiendo qué está libre. Quien actualiza su tarea cobra en el momento: ve qué está libre y qué se mueve, y deja de recibir interrupciones preguntándole cómo va.
 
 ### Alcance
 
@@ -33,10 +33,18 @@ Una vertical fina y usable de punta a punta, en un espacio único compartido:
 
 - Crear una tarea con título, responsable, estado y fecha de vencimiento. Ningún campo es obligatorio.
 - El único estado definido por el producto es "Sin asignar", que significa que la tarea está libre. El resto de estados los escribe el responsable de la tarea.
-- Cambiar el estado es rápido, en dos clics sobre la lista ya abierta.
+- El responsable es cualquier usuario registrado en el espacio compartido.
+- Una tarea nueva nace "Sin asignar", se le ponga responsable o no.
+- El responsable y el estado son independientes: se rellenan por separado.
+- Solo el responsable cambia el estado de su tarea. Si la tarea está "Sin asignar", cualquiera puede cambiarla.
+- Cambiar el estado es rápido, en segundos, sobre la lista ya abierta.
 - La lista se filtra por estado, para centrarse en lo pendiente. Es el único filtro del MVP.
 - La lista deja ver qué se ha pasado de plazo.
 - Al volver, la lista marca qué tareas han cambiado desde tu última visita. Sin historial ni informes.
+  - En la primera visita no aparece nada marcado.
+  - Cada vez que abres la lista, las marcas se reinician.
+  - Ese dato es privado: solo cada persona ve sus marcas, y nadie ve cuándo miró otra persona.
+- Cada tarea muestra cuándo se actualizó por última vez, para que el equipo juzgue si está caducada. Sin alertas.
 - Los cambios de estado aparecen sin refrescar ni preguntar.
 - El estado es de la tarea, no de la persona.
 
@@ -49,7 +57,7 @@ Cada exclusión lleva la hipótesis del producto que no ayudaría a validar.
 - **Notificaciones push:** la señal es un resumen que espera, que se ve al llegar o volver de una reunión. Un aviso que interrumpe contradice el motivo de existir.
 - **Vista o informe para un manager, y analítica:** el valor es para los pares. No ayuda a validar que el equipo cancele la ronda de "¿en qué estás?".
 - **Filtrar por responsable ("mis tareas"):** el MVP se valida con un solo filtro. Queda sin validar si hace falta una cola personal, aparte de ver qué hay libre y qué se mueve.
-- **Roles y permisos avanzados:** con roles planos, todos editan lo mismo. Queda sin validar si la confianza entre pares basta, y no se resuelve aquí.
+- **Roles y permisos avanzados:** los roles son planos y la única regla es que cada persona cambia lo suyo. Queda sin validar si hace falta más control, y no se resuelve aquí.
 - **Comentarios en tareas, chat, videollamada y edición simultánea:** el producto no es un canal de conversación. No ayuda a validar que el estado se vea de un vistazo.
 - **Integración con Slack:** no ayuda a validar nada del problema. Exige integrar un tercero y el estado no depende de él.
 - **Derivar el estado de Git, CI o calendario:** contradice la hipótesis central. El estado lo teclea quien hace la tarea, y esa es la apuesta a validar, no automatizarla.
@@ -61,9 +69,10 @@ Cada exclusión lleva la hipótesis del producto que no ayudaría a validar.
 
 - **Éxito para el usuario:** deja de hacer la ronda de "¿en qué estás?" porque el estado se ve de un vistazo.
 - **Criterio a una semana de uso real:** el equipo cancela esa ronda y nadie pide que vuelva. Si la siguen haciendo igual, no funcionó.
-- **Riesgo nº 1:** que la información se quede vieja. La mitigación es que actualizar cueste dos clics, sin obligar a nadie.
+- **Riesgo nº 1:** que la información se quede vieja. La mitigación es que actualizar cueste segundos, sin obligar a nadie. Un compañero no puede corregir el estado caducado de la tarea de otra persona, y eso agrava el riesgo.
 
 ## 5. Supuestos
 
 - Un espacio único compartido. Varios equipos separados quedan fuera del MVP.
-- Quien se registra entra en ese espacio compartido y ve y edita todo (por confirmar).
+- Quien se registra entra en ese espacio compartido y ve todo. Es un riesgo asumido para el MVP: es una demo con un caso de estudio, no un cliente real, así que no hay datos sensibles ni usuarios ajenos al equipo.
+- Los estados que no son "Sin asignar" son texto libre. El filtro por estado puede fragmentarse si cada persona escribe el mismo estado de forma distinta.
