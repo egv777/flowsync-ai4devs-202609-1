@@ -1,58 +1,64 @@
-# PRD: FlowSync (MVP)
+# Alcance del MVP de FlowSync
 
-## 1. Problema y objetivo
+## 1. El terreno que ya existe
 
-Los equipos remotos usan la daily para saber en qué está trabajando cada persona. FlowSync quiere que ese estado sea visible en cualquier momento y se actualice al instante, de modo que la daily deje de hacer falta. La idea es parecida a Jira, pero con el estado del equipo siempre al día.
+Hoy el producto solo tiene cuentas de usuario: registro, inicio y cierre de sesión, y una página de perfil. El modelo de datos son personas (nombre, email, contraseña) y sus sesiones. No existe ninguna tarea, ni la noción de equipo, ni nada en tiempo real. Todo lo que sigue es nuevo y se apoya en esas cuentas.
 
-**Métrica de éxito:** se cancela o se reduce la daily. Habrá que medirlo con el número de dailies por semana del equipo piloto. Falta definir el valor objetivo.
+## 2. Decisiones de partida
 
-## 2. Usuarios
+Estas respuestas del producto ya están decididas y no se discuten aquí:
 
-- **Miembros del equipo:** crean tareas, las actualizan y ven qué hacen los demás.
-- **Manager:** consulta el estado del equipo y el resumen.
+- La daily no desaparece entera. Desaparece la ronda de "¿en qué estás?". Los bloqueos siguen tratándose en la daily y este MVP no los resuelve.
+- El estado lo teclea quien hace la tarea, en segundos. No se deriva de Git, CI ni calendario.
+- El riesgo nº 1 a validar es que la información se quede vieja.
+- Caso de estudio, no cliente real: un equipo de 6 personas de producto SaaS en 3 husos horarios.
 
-## 3. Alcance del MVP
+## 3. Alcance en cinco bloques
 
-- **Un único equipo.** Todos los usuarios registrados forman parte de él. No hay pantallas para crear equipos ni invitar gente.
-- **Cada equipo solo ve lo suyo.** Con un equipo único esto aún no se aprecia, pero queda como principio.
+### Problema
 
-### Tareas
+Nadie ve el estado del equipo sin interrumpir a alguien. La daily se come la mitad de sus 15 minutos en la ronda de "¿en qué estás?", y el "¿cómo vas?" por chat interrumpe sin parar. Episodio concreto: dos personas tocaron el mismo módulo la misma semana sin saberlo y perdieron dos días.
 
-- Campos: título, descripción, responsable y fecha límite.
-- Estados: Por hacer, En curso y Hecha.
-- Cualquier miembro puede crear tareas y asignarlas a cualquier persona del equipo.
-- Una persona puede tener varias tareas en curso a la vez, pero marca una como su foco actual.
+### Usuarios
 
-### Vista en vivo del equipo
+Equipos remotos pequeños, de 3 a 10 personas. Los beneficiarios son los pares, no un lead: no hay reporte hacia arriba. Roles planos: todos ven y editan lo mismo.
 
-- Se ve qué hace cada miembro: sus tareas en curso y su foco actual.
-- Los cambios aparecen al instante, sin recargar la página.
+### Propuesta de valor
 
-### Resumen para el manager
+Saber de un vistazo quién está en qué, para no empezar algo que otra persona ya toca y para elegir lo siguiente sabiendo qué está libre. Quien actualiza su tarea cobra en el momento: esa misma lista es su cola de trabajo y deja de recibir interrupciones.
 
-- Cubre las últimas 24 horas móviles.
-- Muestra las tareas completadas por persona y las tareas en curso con el foco actual de cada una.
+### Alcance
 
-### Avisos
+Una vertical fina y usable de punta a punta, en un espacio único compartido:
 
-No hay notificaciones. El usuario ve los cambios cuando abre la app.
+- Crear una tarea con título, responsable, estado y fecha de vencimiento. Sin otros campos obligatorios.
+- Estados simples, que se cambian en dos clics sobre la lista ya abierta.
+- La lista se filtra por estado para centrarse en lo pendiente, y deja ver qué se ha pasado de plazo.
+- Los cambios de estado aparecen sin refrescar ni preguntar.
+- El estado es de la tarea, no de la persona.
 
-## 4. Fuera del MVP
+### NO-alcance
 
-- Varios equipos y organizaciones.
-- Integraciones con Slack, Git o Jira.
-- Comentarios o chat en las tareas (futuro).
-- Bloqueos como concepto propio (futuro).
-- Prioridad de las tareas.
-- Notificaciones fuera de la app.
-- Resumen con tareas sin movimiento o con texto escrito por cada persona.
+Cada exclusión lleva la hipótesis del producto que no ayudaría a validar.
 
-## 5. Contexto y validación
+- **Varios equipos, o gente en más de un equipo:** no ayuda a validar si un espacio compartido evita la duplicación de trabajo. Se anota como supuesto y no se construye.
+- **Quién está conectado e indicadores de actividad:** el producto trata de frescura, no de presencia. Medir conexión es vigilancia, y se rechaza a propósito.
+- **Notificaciones push:** la señal es un resumen que espera, que se ve al llegar o volver de una reunión. Un aviso que interrumpe contradice el motivo de existir.
+- **Vista o informe para un manager, y analítica:** el valor es para los pares. No ayuda a validar que el equipo cancele la ronda de "¿en qué estás?".
+- **Roles y permisos avanzados:** con roles planos, el MVP se valida sin jerarquía.
+- **Comentarios en tareas:** el chat es otro canal. No ayuda a validar que el estado se vea de un vistazo.
+- **Integración con Slack y derivar el estado de Git, CI o calendario:** es otro producto, con integraciones de terceros. Además, lo que importa es que el estado lo teclee quien hace la tarea.
+- **Convivir con otro gestor de tareas, o leer tareas de otro sitio:** exige doble actualización, que es como muere esta categoría. FlowSync sustituye al gestor, no convive con él.
+- **Sprints, estimaciones, épicas y backlog priorizado:** un equipo que los necesite no es el usuario. Además, contradicen "menos rollo que Jira".
+- **Resolver bloqueos:** la parte de bloqueos de la daily sigue fuera de este MVP. Validar si la ronda de estado desaparece no los necesita.
 
-El MVP se valida como demo o uso interno del curso, sin usuarios reales. Hoy el producto solo ofrece registro, login y perfil. Todo lo anterior es nuevo.
+## 4. Cómo sabremos si funciona
 
-## 6. Decisiones abiertas
+- **Éxito para el usuario:** deja de hacer la ronda de "¿en qué estás?" porque el estado se ve de un vistazo.
+- **Criterio a una semana de uso real:** el equipo cancela esa ronda y nadie pide que vuelva. Si la siguen haciendo igual, no funcionó.
+- **Riesgo nº 1:** que la información se quede vieja. La mitigación es que actualizar cueste dos clics, sin obligar a nadie.
 
-1. **Estructura de la organización.** No está decidido si habrá capa de organización por encima de los equipos ni si una persona podrá estar en varios equipos.
-2. **Rol del manager.** No está decidido si tiene permisos o vistas distintas a las de un miembro. Con el equipo único, hoy no hay diferencia.
-3. **Valor objetivo de la métrica.** Falta fijar cuánto se tiene que reducir la daily para dar el MVP por exitoso.
+## 5. Supuestos
+
+- Un espacio único compartido. Varios equipos separados quedan fuera del MVP.
+- Quien se registra entra en ese espacio compartido y ve y edita todo (por confirmar).
